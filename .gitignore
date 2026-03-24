@@ -1,0 +1,4 @@
+.env
+data/processed/*.parquet
+__pycache__/
+.DS_Store
