@@ -249,3 +249,62 @@ def section4_summary(df: pd.DataFrame, vals: dict) -> str:
     lines.append(f"- **{current_yc} + {current_stress}**: {char}")
 
     return "  \n".join(lines)
+
+
+# ── Section 5: Stress → Portfolio Interpretation ──────────────────────────────
+# Descriptive heuristic layer only. Not a trading signal or investment advice.
+
+def get_stress_portfolio_interpretation(stress_regime: str, curve_regime: str) -> dict:
+    """
+    Maps current stress and curve regimes to descriptive portfolio risk labels.
+    All labels are historically informed heuristics — not predictions or recommendations.
+    """
+
+    # Market condition / credit / volatility labels by stress regime
+    interpretation_map = {
+        "Low Stress":      {"market_condition": "Stable",     "credit_risk": "Contained", "volatility_risk": "Low"},
+        "Moderate Stress": {"market_condition": "Watchful",   "credit_risk": "Building",  "volatility_risk": "Normalized"},
+        "High Stress":     {"market_condition": "Stressed",   "credit_risk": "Elevated",  "volatility_risk": "Elevated"},
+    }
+
+    # Portfolio lens labels by stress regime
+    portfolio_map = {
+        "Low Stress":      {"duration_risk": "Low",      "credit_exposure": "Favorable",  "convexity_value": "Low"},
+        "Moderate Stress": {"duration_risk": "Moderate", "credit_exposure": "Acceptable", "convexity_value": "Moderate"},
+        "High Stress":     {"duration_risk": "High",     "credit_exposure": "Risky",      "convexity_value": "High"},
+    }
+
+    # Positioning bullets by stress regime
+    bullets_map = {
+        "Low Stress": [
+            "Low-stress environments have historically supported more stable carry conditions.",
+            "Credit risk has typically remained more manageable than in stressed periods.",
+            "Optionality has generally been less central than in periods of elevated stress.",
+        ],
+        "Moderate Stress": [
+            "Moderate stress environments have historically supported balanced positioning.",
+            "Risk often emerges from transitions rather than steady states.",
+            "Optionality can become more relevant if stress accelerates.",
+        ],
+        "High Stress": [
+            "High-stress periods have historically coincided with weaker curve structure and wider credit pressure.",
+            "More defensive positioning has typically been favored relative to calm periods.",
+            "Optionality has generally become more valuable as volatility and uncertainty rise.",
+        ],
+    }
+
+    interp   = interpretation_map.get(stress_regime, {"market_condition": "—", "credit_risk": "—", "volatility_risk": "—"})
+    portfolio = portfolio_map.get(stress_regime,      {"duration_risk": "—",   "credit_exposure": "—", "convexity_value": "—"})
+    bullets   = bullets_map.get(stress_regime, ["Insufficient history for this regime combination."])
+
+    return {
+        "stress_regime":    stress_regime,
+        "curve_regime":     curve_regime,
+        "market_condition": interp["market_condition"],
+        "credit_risk":      interp["credit_risk"],
+        "volatility_risk":  interp["volatility_risk"],
+        "duration_risk":    portfolio["duration_risk"],
+        "credit_exposure":  portfolio["credit_exposure"],
+        "convexity_value":  portfolio["convexity_value"],
+        "bullets":          bullets,
+    }

@@ -30,6 +30,7 @@ from src.utils       import (
     section3_bullets,
     curve_stress_table,
     section4_summary,
+    get_stress_portfolio_interpretation,
 )
 
 # ── Page config ────────────────────────────────────────────────────────────────
@@ -213,6 +214,63 @@ st.dataframe(stress_tbl.style.apply(_highlight_stress, axis=1), use_container_wi
 
 st.write("")
 st.markdown(section4_summary(df, vals))
+
+st.markdown('<div class="divider"></div>', unsafe_allow_html=True)
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+# SECTION 5 — Stress → Portfolio Interpretation
+# ══════════════════════════════════════════════════════════════════════════════
+st.subheader("5 — Stress → Portfolio Interpretation")
+st.markdown(
+    "This section translates current stress and curve conditions into historically observed portfolio risk characteristics."
+)
+st.markdown(
+    "<div class='disclaimer'>⚠ Descriptive interpretation based on historical patterns — not a forecast or investment advice.</div>",
+    unsafe_allow_html=True,
+)
+st.write("")
+
+playbook = get_stress_portfolio_interpretation(current_stress, current_yc)
+
+# Current state
+ca, cb = st.columns(2)
+ca.metric("Stress Regime",      playbook["stress_regime"])
+cb.metric("Yield Curve Regime", playbook["curve_regime"])
+
+st.write("")
+
+# Interpretation
+st.markdown("**Interpretation**")
+i1, i2, i3 = st.columns(3)
+i1.metric("Market Condition", playbook["market_condition"])
+i2.metric("Credit Risk",      playbook["credit_risk"])
+i3.metric("Volatility Risk",  playbook["volatility_risk"])
+
+st.write("")
+
+# Portfolio lens
+st.markdown("**Portfolio Lens**")
+p1, p2, p3 = st.columns(3)
+p1.metric("Duration Risk",    playbook["duration_risk"])
+p2.metric("Credit Exposure",  playbook["credit_exposure"])
+p3.metric("Convexity Value",  playbook["convexity_value"])
+
+st.write("")
+
+# Positioning implications
+st.markdown("**Positioning Implications**")
+for bullet in playbook["bullets"]:
+    st.markdown(f"- {bullet}")
+
+st.write("")
+st.markdown(
+    "<div class='caption-text'>"
+    "Labels derived from historical regime patterns. "
+    "This framework is descriptive rather than predictive — intended to contextualize market conditions, not forecast them."
+    "</div>",
+    unsafe_allow_html=True,
+)
 
 st.markdown('<div class="divider"></div>', unsafe_allow_html=True)
 st.caption(

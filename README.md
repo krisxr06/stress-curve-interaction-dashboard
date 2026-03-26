@@ -78,6 +78,7 @@ Applied in strict priority order (identical to Projects 1 and 2):
 | **2 — Stress by Curve Regime** | Avg z-score bar chart + raw values table by YC regime |
 | **3 — Stress × Curve Interaction** | Co-occurrence heatmap (centerpiece) + 4 observational bullets |
 | **4 — Curve Behavior Under Stress** | Spread and inversion stats by stress regime + summary bullets |
+| **5 — Stress → Portfolio Interpretation** | Rule-based interpretation layer: market condition, credit risk, volatility risk, duration risk, credit exposure, convexity value, and positioning implications derived from current stress and curve regimes |
 
 ## Key Takeaways
 
@@ -85,6 +86,7 @@ Applied in strict priority order (identical to Projects 1 and 2):
 - **Normal curve regimes** have historically coincided with Low or Moderate stress the vast majority of the time — High stress during a normal curve has been the exception.
 - **Re-steepening** is rare (~4% of months) and has historically occurred during transitional macro environments; its stress profile varies depending on whether it follows a shallow or deep inversion.
 - **Stress regimes drive curve structure**: High Stress periods have historically been associated with lower average spreads and higher inversion frequency than Low Stress periods.
+- **Portfolio interpretation layer** (Section 5) translates the current stress and curve regime into historically observed risk characteristics — covering duration risk, credit exposure, convexity value, and positioning implications. All labels are descriptive heuristics, not investment recommendations.
 
 ## How to Run
 
